@@ -23,23 +23,6 @@ app.get("/", (req, res) => {
             import main from "/bundle/client/main.tsx";
             main()
         </script>
-        <style>
-            body {
-                text-align: center;
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            }
-            #container {
-                display: inline-block;
-                margin: 100px auto;
-                padding: 20px 50px 50px 50px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.05);
-            }
-            #root {
-                display: inline-block;
-            }
-        </style>
         <body>
             <div id="container">
                 <h4>lazybun example</h4>
@@ -74,8 +57,8 @@ async function get_bundle_file({entry, type}: {entry: string, type: BundleType})
         relevant_bundle = bundle_result.outputs.filter(o => o.kind == "entry-point")[0];
         bundle_text = await relevant_bundle.text();
     } else if(type == "css") {
-        relevant_bundle = bundle_result.outputs.filter(o => o.kind == "asset" && o.path.endsWith(".css"))[0];
-        bundle_text = await relevant_bundle.text();
+        let relevant_bundles = bundle_result.outputs.filter(o => o.kind == "asset" && o.path.endsWith(".css"));
+        bundle_text = await Promise.all(relevant_bundles.map(b => b.text())).then(texts => texts.join("\n"));
     } else if(type == "map") {
         relevant_bundle = bundle_result.outputs.filter(o => o.kind == "asset" && o.path.endsWith(".js.map"))[0];
         bundle_text = await relevant_bundle.text();

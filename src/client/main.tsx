@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Clock from 'react-clock';
 import { createRoot } from 'react-dom/client';
 import 'react-clock/dist/Clock.css';
+import './base.css';
 
 function MyApp() {
   const [value, setValue] = useState(new Date());

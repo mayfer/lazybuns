@@ -1,0 +1,16 @@
+
+body {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#container {
+    display: inline-block;
+    margin: 100px auto;
+    padding: 20px 50px 50px 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.05);
+}
+#root {
+    display: inline-block;
+}
