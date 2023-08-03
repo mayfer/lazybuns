@@ -37,13 +37,14 @@ async function get_bundle({entry}) {
     const bundle_result = await Bun.build({
         entrypoints: [entry],
         format: "esm",
-        sourcemap: "inline",
+        // sourcemap: "inline",
         minify: {
             whitespace: true,
             identifiers: true,
             syntax: true,
         },
     });
+
     return bundle_result;
 }
 
@@ -66,7 +67,7 @@ async function get_bundle_file({entry, type}: {entry: string, type: BundleType})
     return bundle_text;
 }
 
-
+const bundle_cache = {};
 app.get(`/bundle/:folder(${static_dirs.join("|")})/:file`, async (req, res) => {
     const { folder, file } = req.params;
     let entry = `src/${folder}/${file}`;
@@ -76,11 +77,21 @@ app.get(`/bundle/:folder(${static_dirs.join("|")})/:file`, async (req, res) => {
 
     if(["ts", "tsx", "js", "jsx"].includes(file_extension)) {
         res.setHeader("Content-Type", "application/javascript");
-        bundle_text = await get_bundle_file({entry, type: "js"});
+        if(bundle_cache[entry]) {
+            bundle_text = bundle_cache[entry];
+        } else {
+            bundle_text = await get_bundle_file({entry, type: "js"});
+            bundle_cache[entry] = bundle_text;
+        }
     } else if(file_extension == "css") {
-        entry = entry.replace(/\.css$/, "");
         res.setHeader("Content-Type", "text/css");
-        bundle_text = await get_bundle_file({entry, type: "css"});
+        if(bundle_cache[entry]) {
+            bundle_text = bundle_cache[entry];
+        } else {
+            let js_entry = entry.replace(/\.css$/, "");
+            bundle_text = await get_bundle_file({entry: js_entry, type: "css"});
+            bundle_cache[entry] = bundle_text;
+        }
     }
 
 
