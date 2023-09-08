@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Clock from 'react-clock';
 import { createRoot } from 'react-dom/client';
 import 'react-clock/dist/Clock.css';
@@ -24,6 +24,6 @@ function MyApp() {
 
 export default function start() {
   const container = document.getElementById('root');
-  const root = createRoot(container); // createRoot(container!) if you use TypeScript
+  const root = createRoot(container);
   root.render(<MyApp />);
 };
