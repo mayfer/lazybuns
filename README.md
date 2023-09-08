@@ -26,8 +26,8 @@ Lazybun prefixes static files with `/bundle:` by default. You can change this op
 lazybun(app, {
   dirs: {
     "client": "example_app/client",
-    "prefix": "[b]" // this would expose bundles at http://hostname/[b]/client/something.tsx
-  }
+  },
+  prefix: "[b]" // this would expose bundles at http://hostname/[b]/client/something.tsx
 });
 ```
 
