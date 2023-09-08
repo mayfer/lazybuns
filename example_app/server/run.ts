@@ -1,13 +1,13 @@
 
 import express from "express";
-import lazybun from "../../index.js";
+import lazybuns from "../../index";
 
 const port = 4001;
 const app = express();
 
-lazybun(app, {
+lazybuns(app, {
   dirs: {
-    client: "example_app/client",
+    "client": "example_app/client",
   }
 });
 

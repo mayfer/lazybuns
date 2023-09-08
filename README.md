@@ -21,6 +21,16 @@ lazybun(app, {
 });
 ```
 
+Lazybun prefixes static files with `/bundle:` by default. You can change this optional setting:
+```javascript
+lazybun(app, {
+  dirs: {
+    "client": "example_app/client",
+    "prefix": "[b]" // this would expose bundles at http://hostname/[b]/client/something.tsx
+  }
+});
+```
+
 The "dirs" property lists maps from URLs to static file directories, relative to app root.
 
 
