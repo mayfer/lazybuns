@@ -12,9 +12,10 @@ See the result in http://localhost:4000
 To use `lazybuns`, all you need is to wrap your express `app` with `lazybuns`:
 
 ```javascript
+import lazybuns from "lazybuns"
 const app = express();
 
-lazybun(app, {
+lazybuns(app, {
   dirs: {
     "client": "example_app/client",
   }
@@ -23,7 +24,7 @@ lazybun(app, {
 
 Lazybun prefixes static files with `/bundle:` by default. You can change this optional setting:
 ```javascript
-lazybun(app, {
+lazybuns(app, {
   dirs: {
     "client": "example_app/client",
   },
